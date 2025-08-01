@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>খুঁজে নাও - অনলাইন শপিং</title>
+     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-main {
+            padding: 15px 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #00ADEF;
+            text-decoration: none;
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-box {
+            display: flex;
+            background: #f8f8f8;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            overflow: hidden;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            background: transparent;
+        }
+
+        .search-btn {
+            background: #00ADEF;
+            border: none;
+            padding: 12px 20px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: #439fc0;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            position: relative;
+            color: #333;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #00ADEF;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        /* Enhanced Navigation */
+        .nav {
+            background: white;
+            border-top: 1px solid #e0e6ed;
+            position: relative;
+        }
+
+        .nav-container {
+            padding: 0 15px;
+        }
+
+        .nav-items {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+        }
+
+        .nav-item {
+            position: relative;
+            margin: 0 15px;
+        }
+
+        .nav-link {
+            color: #00ADEF;
+            text-decoration: none;
+            padding: 20px 15px;
+            display: block;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Dropdown menus */
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 250px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .nav-item:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            position: relative;
+        }
+
+        .dropdown-link {
+            color: #333;
+            text-decoration: none;
+            padding: 12px 20px;
+            display: block;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-link:hover {
+            background: #f8f9fa;
+            color: #00ADEF;
+            padding-left: 25px;
+        }
+
+        /* Sub-dropdown */
+        .sub-dropdown {
+            position: absolute;
+            top: 0;
+            left: 100%;
+            background: white;
+            min-width: 220px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(10px);
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover .sub-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        .sub-dropdown-link {
+            color: #555;
+            text-decoration: none;
+            padding: 10px 18px;
+            display: block;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f5f5f5;
+            font-size: 14px;
+        }
+
+        .sub-dropdown-link:hover {
+            background: #f0f8ff;
+            color: #00ADEF;
+            padding-left: 23px;
+        }
+
+        /* Hero Slider - Fixed */
+        .hero-slider {
+            position: relative;
+            height:400px;
+            overflow: hidden;
+            margin-bottom: 60px;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        /* স্লাইডারের ব্যাকগ্রাউন্ড ইমেজ */
+        .slide:nth-child(1) {
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://img.lazcdn.com/us/domino/92cbdcb4-0eba-4f82-868d-a9ca90366eb3_BD-1976-688.jpg_2200x2200q80.jpg_.webp');
+        }
+
+        .slide:nth-child(2) {
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://img.lazcdn.com/us/domino/fed2065b-5456-4edf-8377-952a3fb191e4_BD-1976-688.jpg_2200x2200q80.jpg_.webp');
+        }
+
+        .slide:nth-child(3) {
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://img.lazcdn.com/us/domino/8c2a83b4-bc22-4936-a729-91ea3fa493af_BD-1976-688.jpg_2200x2200q80.jpg_.webp');
+        }
+
+        /* ফলব্যাক কালার যদি ইমেজ লোড না হয় */
+        .slide:nth-child(1) {
+            background-color: #667eea;
+        }
+
+        .slide:nth-child(2) {
+            background-color: #f093fb;
+        }
+
+        .slide:nth-child(3) {
+            background-color: #4facfe;
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .slide h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            animation: slideInFromTop 1s ease-out;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .slide p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: slideInFromBottom 1s ease-out 0.3s both;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .slide .cta-btn {
+            background: #00ADEF;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            animation: slideInFromBottom 1s ease-out 0.6s both;
+            box-shadow: 0 4px 15px rgba(255,69,0,0.3);
+        }
+
+        .slide .cta-btn:hover {
+            background: #439fc0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,69,0,0.4);
+        }
+
+        /* Slider Navigation */
+        .slider-nav {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 3;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slider-dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        .slider-arrows {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 24px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+            z-index: 3;
+        }
+
+        .slider-arrows:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .prev-arrow {
+            left: 30px;
+        }
+
+        .next-arrow {
+            right: 30px;
+        }
+
+        /* Animations */
+        @keyframes slideInFromTop {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInFromBottom {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Categories Section */
+        .categories {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #333;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s;
+        }
+
+        .category-card:hover::before {
+            left: 100%;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .category-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:nth-child(2) .category-icon {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .category-card:nth-child(3) .category-icon {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .category-card:hover .category-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .category-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .category-desc {
+            color: #666;
+            font-size: 16px;
+        }
+
+        /* Featured Products */
+        .featured-products {
+            margin-bottom: 60px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            height: 250px;
+            background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: #999;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 20px;
+            color: #00ADEF;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .product-btn {
+            width: 100%;
+            background: #00ADEF;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .product-btn:hover {
+            background: #439fc0;
+        }
+
+        /* Footer */
+        .footer {
+            background: #222;
+            color: white;
+            padding: 50px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #00ADEF;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            line-height: 1.8;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #00ADEF;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #444;
+            padding-top: 20px;
+            text-align: center;
+            color: #999;
+        }
+
+        /* Side Menu */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -400px;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            z-index: 2000;
+            transition: left 0.3s ease;
+            box-shadow: 2px 0 20px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+
+        .side-menu.active {
+            left: 0;
+        }
+
+        .menu-header {
+            padding: 25px;
+            background: #00ADEF;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .menu-items {
+            padding: 20px 0;
+        }
+
+        .menu-item {
+            position: relative;
+        }
+
+        .menu-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 25px;
+            text-decoration: none;
+            color: #333;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .menu-link:hover {
+            background: #f8f9fa;
+            color: #00ADEF;
+        }
+
+        .menu-link-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-item-icon {
+            width: 28px;
+            margin-right: 15px;
+            font-size: 20px;
+        }
+
+        .submenu-arrow {
+            font-size: 14px;
+            transition: transform 0.3s ease;
+            color: #999;
+        }
+
+        .menu-item.expanded .submenu-arrow {
+            transform: rotate(90deg);
+        }
+
+        /* Submenu */
+        .submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .menu-item.expanded .submenu {
+            max-height: 500px;
+        }
+
+        .submenu-item {
+            position: relative;
+        }
+
+        .submenu-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 25px 12px 50px;
+            text-decoration: none;
+            color: #555;
+            border-bottom: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .submenu-link:hover {
+            background: #e9ecef;
+            color: #00ADEF;
+            padding-left: 55px;
+        }
+
+        /* Sub-submenu */
+        .sub-submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: #e9ecef;
+        }
+
+        .submenu-item.expanded .sub-submenu {
+            max-height: 300px;
+        }
+
+        .sub-submenu-link {
+            display: block;
+            padding: 10px 25px 10px 70px;
+            text-decoration: none;
+            color: #666;
+            border-bottom: 1px solid #d0d0d0;
+            transition: all 0.3s ease;
+            font-size: 13px;
+        }
+
+        .sub-submenu-link:hover {
+            background: #dee2e6;
+            color: #00ADEF;
+            padding-left: 75px;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .bottom-nav .nav-items {
+            display: flex;
+            justify-content: space-around;
+            height: auto;
+        }
+
+        .mobile-nav-item {
+            text-align: center;
+            text-decoration: none;
+            color: #666;
+            font-size: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-nav-item.active {
+            color: #00ADEF;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1500;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Search Suggestions */
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 15px 15px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+
+        .suggestion-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s ease;
+        }
+
+        .suggestion-item:hover {
+            background: #f8f9fa;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav {
+                display: none;
+            }
+
+            .header-content {
+                padding: 10px 15px;
+            }
+
+            .search-container {
+                display: none;
+            }
+
+            .hero-slider {
+                height: 400px;
+            }
+
+            .slide h1 {
+                font-size: 28px;
+            }
+
+            .slide p {
+                font-size: 16px;
+            }
+
+            .slider-arrows {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .footer {
+                background: #00ADEF;
+                padding: 15px;
+                margin-bottom: 70px;
+                text-align: center;
+            }
+
+            .footer-content {
+                display: none;
+            }
+
+            .footer-bottom {
+                border-top: none;
+                padding-top: 0;
+                color: white;
+                font-size: 12px;
+                line-height: 1.5;
+            }
+
+            .bottom-nav {
+                display: block;
+            }
+
+            .container {
+                padding: 0 10px;
+            }
+
+            .side-menu {
+                width: 320px;
+                left: -320px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-slider {
+                height: 350px;
+            }
+
+            .category-card {
+                padding: 30px 20px;
+            }
+
+            .category-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+
+            .category-name {
+                font-size: 20px;
+            }
+
+            .side-menu {
+                width: 280px;
+                left: -280px;
+            }
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Focus States */
+        button:focus, input:focus, a:focus {
+            outline: 2px solid #00ADEF;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-main">
+            <div class="container">
+                <div class="header-content">
+                    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                    <a href="#" class="logo">খুঁজে নাও</a>
+                    <div class="search-container">
+                        <div class="search-box">
+                            <input type="text" class="search-input" placeholder="পণ্য খুঁজুন..." id="searchInput">
+                            <button class="search-btn" onclick="performSearch()">🔍</button>
+                        </div>
+                    </div>
+                    <div class="header-actions">
+                        <button class="cart-btn" onclick="showCart()">
+                            🛒
+                            <span class="cart-count" id="cartCount">0</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Search -->
+    <div class="search-container mobile-search-container" style="display: none; padding: 15px; background: white;">
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="পণ্য খুঁজুন..." id="mobileSearchInput">
+            <button class="search-btn" onclick="performSearch()">🔍</button>
+        </div>
+    </div>
+
+    <!-- Enhanced Navigation -->
+    <nav class="nav">
+        <div class="container nav-container">
+            <div class="nav-items">
+                <div class="nav-item">
+                    <a href="#" class="nav-link">পুরুষের পোশাক</a>
+                    <div class="dropdown">
+                        <div class="dropdown-item">
+                            <a href="#" class="dropdown-link">পায়জামা</a>
+                            <div class="sub-dropdown">
+                                <a href="#" class="sub-dropdown-link">কটন পায়জামা</a>
+                                <a href="#" class="sub-dropdown-link">সিল্ক পায়জামা</a>
+                                <a href="#" class="sub-dropdown-link">লিনেন পায়জামা</a>
+                                <a href="#" class="sub-dropdown-link">প্রিমিয়াম পায়জামা</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="#" class="dropdown-link">পাঞ্জাবি</a>
+                            <div class="sub-dropdown">
+                                <a href="#" class="sub-dropdown-link">ঐতিহ্যবাহী পাঞ্জাবি</a>
+                                <a href="#" class="sub-dropdown-link">আধুনিক পাঞ্জাবি</a>
+                                <a href="#" class="sub-dropdown-link">পার্টি পাঞ্জাবি</a>
+                                <a href="#" class="sub-dropdown-link">ব্র্যান্ডেড পাঞ্জাবি</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="#" class="dropdown-link">ট্রাউজার</a>
+                            <div class="sub-dropdown">
+                                <a href="#" class="sub-dropdown-link">ফরমাল ট্রাউজার</a>
+                                <a href="#" class="sub-dropdown-link">ক্যাজুয়াল ট্রাউজার</a>
+                                <a href="#" class="sub-dropdown-link">জিন্স</a>
+                                <a href="#" class="sub-dropdown-link">চিনো প্যান্ট</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link">মহিলাদের পোশাক</a>
+                    <div class="dropdown">
+                        <div class="dropdown-item">
+                            <a href="#" class="dropdown-link">শাড়ি</a>
+                            <div class="sub-dropdown">
+                                <a href="#" class="sub-dropdown-link">কটন শাড়ি</a>
+                                <a href="#" class="sub-dropdown-link">সিল্ক শাড়ি</a>
+                                <a href="#" class="sub-dropdown-link">জামদানি শাড়ি</a>
+                                <a href="#" class="sub-dropdown-link">ডিজাইনার শাড়ি</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="#" class="dropdown-link">সালোয়ার কামিজ</a>
+                            <div class="sub-dropdown">
+                                <a href="#" class="sub-dropdown-link">তিন পিস</a>
+                                <a href="#" class="sub-dropdown-link">আনস্টিচড</a>
+                                <a href="#" class="sub-dropdown-link">পার্টি ওয়্যার</a>
+                                <a href="#" class="sub-dropdown-link">ক্যাজুয়াল ওয়্যার</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="#" class="dropdown-link">কুর্তি</a>
+                            <div class="sub-dropdown">
+                                <a href="#" class="sub-dropdown-link">কটন কুর্তি</a>
+                                <a href="#" class="sub-dropdown-link">জর্জেট কুর্তি</a>
+                                <a href="#" class="sub-dropdown-link">ইন্ডো-ওয়েস্টার্ন</a>
+                                <a href="#" class="sub-dropdown-link">লং কুর্তি</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link">শিশুদের পোশাক</a>
+                    <div class="dropdown">
+                        <div class="dropdown-item">
+                            <a href="#" class="dropdown-link">ছেলেদের পোশাক</a>
+                            <div class="sub-dropdown">
+                                <a href="#" class="sub-dropdown-link">পাঞ্জাবি পায়জামা</a>
+                                <a href="#" class="sub-dropdown-link">শার্ট প্যান্ট</a>
+                                <a href="#" class="sub-dropdown-link">টি-শার্ট</a>
+                                <a href="#" class="sub-dropdown-link">জিন্স</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="#" class="dropdown-link">মেয়েদের পোশাক</a>
+                            <div class="sub-dropdown">
+                                <a href="#" class="sub-dropdown-link">ফ্রক</a>
+                                <a href="#" class="sub-dropdown-link">লেহেঙ্গা</a>
+                                <a href="#" class="sub-dropdown-link">টপ স্কার্ট</a>
+                                <a href="#" class="sub-dropdown-link">জুম্পসুট</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link">অ্যাক্সেসরিজ</a>
+                    <div class="dropdown">
+                        <div class="dropdown-item">
+                            <a href="#" class="dropdown-link">ব্যাগ</a>
+                            <div class="sub-dropdown">
+                                <a href="#" class="sub-dropdown-link">হ্যান্ড ব্যাগ</a>
+                                <a href="#" class="sub-dropdown-link">ব্যাকপ্যাক</a>
+                                <a href="#" class="sub-dropdown-link">ওয়ালেট</a>
+                                <a href="#" class="sub-dropdown-link">লাগেজ</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="#" class="dropdown-link">জুতা</a>
+                            <div class="sub-dropdown">
+                                <a href="#" class="sub-dropdown-link">স্নিকার্স</a>
+                                <a href="#" class="sub-dropdown-link">স্যান্ডেল</a>
+                                <a href="#" class="sub-dropdown-link">ফরমাল শু</a>
+                                <a href="#" class="sub-dropdown-link">বুট</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#offers" class="nav-link">অফার</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Slider -->
+    <section class="hero-slider">
+        <div class="slide active">
+           
+        </div>
+        <div class="slide">
+            
+        </div>
+        <div class="slide">
+        </div>
+        
+        <!-- Slider Navigation -->
+        <div class="slider-nav">
+            <span class="slider-dot active" onclick="currentSlide(1)"></span>
+            <span class="slider-dot" onclick="currentSlide(2)"></span>
+            <span class="slider-dot" onclick="currentSlide(3)"></span>
+        </div>
+        
+        <!-- Slider Arrows -->
+        <button class="slider-arrows prev-arrow" onclick="changeSlide(-1)">❮</button>
+        <button class="slider-arrows next-arrow" onclick="changeSlide(1)">❯</button>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories" id="categories">
+        <div class="container">
+            <h2 class="section-title">প্রধান বিভাগসমূহ</h2>
+            <div class="category-grid">
+                <a href="#" class="category-card" onclick="selectCategory('pajama')">
+                    <div class="category-icon">👔</div>
+                    <h3 class="category-name">পায়জামা</h3>
+                    <p class="category-desc">আরামদায়ক এবং স্টাইলিশ পায়জামার বিশাল সংগ্রহ</p>
+                </a>
+                <a href="#" class="category-card" onclick="selectCategory('panjabi')">
+                    <div class="category-icon">👕</div>
+                    <h3 class="category-name">পাঞ্জাবি</h3>
+                    <p class="category-desc">ঐতিহ্যবাহী এবং আধুনিক ডিজাইনের পাঞ্জাবি</p>
+                </a>
+                <a href="#" class="category-card" onclick="selectCategory('trouser')">
+                    <div class="category-icon">👖</div>
+                    <h3 class="category-name">ট্রাউজার</h3>
+                    <p class="category-desc">অফিস এবং ক্যাজুয়াল পরিধানের জন্য ট্রাউজার</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-products" id="products">
+        <div class="container">
+            <h2 class="section-title">বিশেষ পণ্যসমূহ</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image">👔</div>
+                    <div class="product-info">
+                        <h3 class="product-title">প্রিমিয়াম কটন পায়জামা</h3>
+                        <div class="product-price">৳১,২০০</div>
+                        <button class="product-btn" onclick="addToCart('pajama1')">কার্টে যোগ করুন</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">👕</div>
+                    <div class="product-info">
+                        <h3 class="product-title">ডিজাইনার পাঞ্জাবি</h3>
+                        <div class="product-price">৳১,৮০০</div>
+                        <button class="product-btn" onclick="addToCart('panjabi1')">কার্টে যোগ করুন</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">👖</div>
+                    <div class="product-info">
+                        <h3 class="product-title">ফরমাল ট্রাউজার</h3>
+                        <div class="product-price">৳১,৫০০</div>
+                        <button class="product-btn" onclick="addToCart('trouser1')">কার্টে যোগ করুন</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>খুঁজে নাও</h3>
+                    <p>বাংলাদেশের সবচেয়ে বিশ্বস্ত অনলাইন শপিং প্ল্যাটফর্ম। আমরা প্রতিশ্রুতিবদ্ধ আপনাকে সর্বোচ্চ মানের পণ্য এবং সেবা প্রদান করতে।</p>
+                </div>
+                <div class="footer-section">
+                    <h3>দ্রুত লিংক</h3>
+                    <p><a href="#">আমাদের সম্পর্কে</a></p>
+                    <p><a href="#">প্রাইভেসি পলিসি</a></p>
+                    <p><a href="#">রিটার্ন পলিসি</a></p>
+                    <p><a href="#">কাস্টমার সাপোর্ট</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>যোগাযোগ</h3>
+                    <p>📍 ঢাকা, বাংলাদেশ</p>
+                    <p>📞 ১৬২৬৩</p>
+                    <p>✉️ info@khujenaao.com</p>
+                    <p>🕐 সেবা সময়: সকাল ৯টা - রাত ৯টা</p>
+                </div>
+                <div class="footer-section">
+                    <h3>আমাদের ফলো করুন</h3>
+                    <p><a href="#">📘 Facebook</a></p>
+                    <p><a href="#">📷 Instagram</a></p>
+                    <p><a href="#">🐦 Twitter</a></p>
+                    <p><a href="#">📺 YouTube</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>কপিরাইট © ২০২৫ খুঁজে নাও। সকল অধিকার সংরক্ষিত।</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <div class="nav-items">
+            <a href="#" class="mobile-nav-item active">
+                <span class="nav-icon">🏠</span>
+                হোম
+            </a>
+            <a href="#categories" class="mobile-nav-item">
+                <span class="nav-icon">📂</span>
+                ক্যাটেগরি
+            </a>
+            <a href="#products" class="mobile-nav-item">
+                <span class="nav-icon">💬</span>
+                মেসেজ
+            </a>
+            <a href="#" class="mobile-nav-item" onclick="showCart()">
+                <span class="nav-icon">🛒</span>
+                কার্ট (<span id="mobileCartCount">0</span>)
+            </a>
+            <a href="#" class="mobile-nav-item">
+                <span class="nav-icon">👤</span>
+                লগইন
+            </a>
+        </div>
+    </nav>
+
+    <!-- Side Menu -->
+    <div class="side-menu" id="sideMenu">
+        <div class="menu-header">
+            <div class="logo">খুঁজে নাও</div>
+            <button class="close-btn" onclick="toggleMenu()">×</button>
+        </div>
+        <div class="menu-items">
+            <div class="menu-item">
+                <a href="#" class="menu-link" onclick="toggleSubmenu(this)">
+                    <div class="menu-link-content">
+                        <span class="menu-item-icon">👨</span>
+                        <span>পুরুষের পোশাক</span>
+                    </div>
+                    <span class="submenu-arrow">▶</span>
+                </a>
+                <div class="submenu">
+                    <div class="submenu-item">
+                        <a href="#" class="submenu-link" onclick="toggleSubSubmenu(this)">
+                            <span>পায়জামা</span>
+                            <span class="submenu-arrow">▶</span>
+                        </a>
+                        <div class="sub-submenu">
+                            <a href="#" class="sub-submenu-link">কটন পায়জামা</a>
+                            <a href="#" class="sub-submenu-link">সিল্ক পায়জামা</a>
+                            <a href="#" class="sub-submenu-link">লিনেন পায়জামা</a>
+                            <a href="#" class="sub-submenu-link">প্রিমিয়াম পায়জামা</a>
+                        </div>
+                    </div>
+                    <div class="submenu-item">
+                        <a href="#" class="submenu-link" onclick="toggleSubSubmenu(this)">
+                            <span>পাঞ্জাবি</span>
+                            <span class="submenu-arrow">▶</span>
+                        </a>
+                        <div class="sub-submenu">
+                            <a href="#" class="sub-submenu-link">ঐতিহ্যবাহী পাঞ্জাবি</a>
+                            <a href="#" class="sub-submenu-link">আধুনিক পাঞ্জাবি</a>
+                            <a href="#" class="sub-submenu-link">পার্টি পাঞ্জাবি</a>
+                            <a href="#" class="sub-submenu-link">ব্র্যান্ডেড পাঞ্জাবি</a>
+                        </div>
+                    </div>
+                    <div class="submenu-item">
+                        <a href="#" class="submenu-link" onclick="toggleSubSubmenu(this)">
+                            <span>ট্রাউজার</span>
+                            <span class="submenu-arrow">▶</span>
+                        </a>
+                        <div class="sub-submenu">
+                            <a href="#" class="sub-submenu-link">ফরমাল ট্রাউজার</a>
+                            <a href="#" class="sub-submenu-link">ক্যাজুয়াল ট্রাউজার</a>
+                            <a href="#" class="sub-submenu-link">জিন্স</a>
+                            <a href="#" class="sub-submenu-link">চিনো প্যান্ট</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <a href="#" class="menu-link" onclick="toggleSubmenu(this)">
+                    <div class="menu-link-content">
+                        <span class="menu-item-icon">👩</span>
+                        <span>মহিলাদের পোশাক</span>
+                    </div>
+                    <span class="submenu-arrow">▶</span>
+                </a>
+                <div class="submenu">
+                    <div class="submenu-item">
+                        <a href="#" class="submenu-link" onclick="toggleSubSubmenu(this)">
+                            <span>শাড়ি</span>
+                            <span class="submenu-arrow">▶</span>
+                        </a>
+                        <div class="sub-submenu">
+                            <a href="#" class="sub-submenu-link">কটন শাড়ি</a>
+                            <a href="#" class="sub-submenu-link">সিল্ক শাড়ি</a>
+                            <a href="#" class="sub-submenu-link">জামদানি শাড়ি</a>
+                            <a href="#" class="sub-submenu-link">ডিজাইনার শাড়ি</a>
+                        </div>
+                    </div>
+                    <div class="submenu-item">
+                        <a href="#" class="submenu-link" onclick="toggleSubSubmenu(this)">
+                            <span>সালোয়ার কামিজ</span>
+                            <span class="submenu-arrow">▶</span>
+                        </a>
+                        <div class="sub-submenu">
+                            <a href="#" class="sub-submenu-link">তিন পিস</a>
+                            <a href="#" class="sub-submenu-link">আনস্টিচড</a>
+                            <a href="#" class="sub-submenu-link">পার্টি ওয়্যার</a>
+                            <a href="#" class="sub-submenu-link">ক্যাজুয়াল ওয়্যার</a>
+                        </div>
+                    </div>
+                    <div class="submenu-item">
+                        <a href="#" class="submenu-link" onclick="toggleSubSubmenu(this)">
+                            <span>কুর্তি</span>
+                            <span class="submenu-arrow">▶</span>
+                        </a>
+                        <div class="sub-submenu">
+                            <a href="#" class="sub-submenu-link">কটন কুর্তি</a>
+                            <a href="#" class="sub-submenu-link">জর্জেট কুর্তি</a>
+                            <a href="#" class="sub-submenu-link">ইন্ডো-ওয়েস্টার্ন</a>
+                            <a href="#" class="sub-submenu-link">লং কুর্তি</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <a href="#" class="menu-link" onclick="toggleSubmenu(this)">
+                    <div class="menu-link-content">
+                        <span class="menu-item-icon">👶</span>
+                        <span>শিশুদের পোশাক</span>
+                    </div>
+                    <span class="submenu-arrow">▶</span>
+                </a>
+                <div class="submenu">
+                    <div class="submenu-item">
+                        <a href="#" class="submenu-link" onclick="toggleSubSubmenu(this)">
+                            <span>ছেলেদের পোশাক</span>
+                            <span class="submenu-arrow">▶</span>
+                        </a>
+                        <div class="sub-submenu">
+                            <a href="#" class="sub-submenu-link">পাঞ্জাবি পায়জামা</a>
+                            <a href="#" class="sub-submenu-link">শার্ট প্যান্ট</a>
+                            <a href="#" class="sub-submenu-link">টি-শার্ট</a>
+                            <a href="#" class="sub-submenu-link">জিন্স</a>
+                        </div>
+                    </div>
+                    <div class="submenu-item">
+                        <a href="#" class="submenu-link" onclick="toggleSubSubmenu(this)">
+                            <span>মেয়েদের পোশাক</span>
+                            <span class="submenu-arrow">▶</span>
+                        </a>
+                        <div class="sub-submenu">
+                            <a href="#" class="sub-submenu-link">ফ্রক</a>
+                            <a href="#" class="sub-submenu-link">লেহেঙ্গা</a>
+                            <a href="#" class="sub-submenu-link">টপ স্কার্ট</a>
+                            <a href="#" class="sub-submenu-link">জুম্পসুট</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <a href="#" class="menu-link" onclick="toggleSubmenu(this)">
+                    <div class="menu-link-content">
+                        <span class="menu-item-icon">👜</span>
+                        <span>অ্যাক্সেসরিজ</span>
+                    </div>
+                    <span class="submenu-arrow">▶</span>
+                </a>
+                <div class="submenu">
+                    <div class="submenu-item">
+                        <a href="#" class="submenu-link" onclick="toggleSubSubmenu(this)">
+                            <span>ব্যাগ</span>
+                            <span class="submenu-arrow">▶</span>
+                        </a>
+                        <div class="sub-submenu">
+                            <a href="#" class="sub-submenu-link">হ্যান্ড ব্যাগ</a>
+                            <a href="#" class="sub-submenu-link">ব্যাকপ্যাক</a>
+                            <a href="#" class="sub-submenu-link">ওয়ালেট</a>
+                            <a href="#" class="sub-submenu-link">লাগেজ</a>
+                        </div>
+                    </div>
+                    <div class="submenu-item">
+                        <a href="#" class="submenu-link" onclick="toggleSubSubmenu(this)">
+                            <span>জুতা</span>
+                            <span class="submenu-arrow">▶</span>
+                        </a>
+                        <div class="sub-submenu">
+                            <a href="#" class="sub-submenu-link">স্নিকার্স</a>
+                            <a href="#" class="sub-submenu-link">স্যান্ডেল</a>
+                            <a href="#" class="sub-submenu-link">ফরমাল শু</a>
+                            <a href="#" class="sub-submenu-link">বুট</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <a href="#offers" class="menu-link" onclick="toggleMenu()">
+                    <div class="menu-link-content">
+                        <span class="menu-item-icon">🎁</span>
+                        <span>অফার</span>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="menu-item">
+                <a href="#contact" class="menu-link" onclick="toggleMenu()">
+                    <div class="menu-link-content">
+                        <span class="menu-item-icon">📞</span>
+                        <span>যোগাযোগ</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+    <script>
+        let cartCount = 0;
+        let cartItems = [];
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.slider-dot');
+
+        // Slider Functions
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+        }
+
+        function changeSlide(direction) {
+            currentSlideIndex += direction;
+            if (currentSlideIndex >= slides.length) currentSlideIndex = 0;
+            if (currentSlideIndex < 0) currentSlideIndex = slides.length - 1;
+            showSlide(currentSlideIndex);
+        }
+
+        function currentSlide(index) {
+            currentSlideIndex = index - 1;
+            showSlide(currentSlideIndex);
+        }
+
+        // Auto slide
+        setInterval(() => {
+            changeSlide(1);
+        }, 5000);
+
+        // Menu Functions
+        function toggleMenu() {
+            const sideMenu = document.getElementById('sideMenu');
+            const overlay = document.getElementById('overlay');
+            sideMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        function toggleSubmenu(element) {
+            const menuItem = element.parentElement;
+            const isExpanded = menuItem.classList.contains('expanded');
+            
+            // Close all other submenus
+            document.querySelectorAll('.menu-item.expanded').forEach(item => {
+                if (item !== menuItem) {
+                    item.classList.remove('expanded');
+                }
+            });
+            
+            // Toggle current submenu
+            menuItem.classList.toggle('expanded');
+            
+            // Prevent menu from closing
+            event.preventDefault();
+            return false;
+        }
+
+        function toggleSubSubmenu(element) {
+            const submenuItem = element.parentElement;
+            const isExpanded = submenuItem.classList.contains('expanded');
+            
+            // Close all other sub-submenus in the same submenu
+            const parentSubmenu = submenuItem.closest('.submenu');
+            parentSubmenu.querySelectorAll('.submenu-item.expanded').forEach(item => {
+                if (item !== submenuItem) {
+                    item.classList.remove('expanded');
+                }
+            });
+            
+            // Toggle current sub-submenu
+            submenuItem.classList.toggle('expanded');
+            
+            // Prevent menu from closing
+            event.preventDefault();
+            return false;
+        }
+
+        function performSearch() {
+            const searchInputs = [document.getElementById('searchInput'), document.getElementById('mobileSearchInput')];
+            const searchInput = searchInputs.find(input => input && input.value.trim());
+            if (!searchInput) return;
+
+            const searchTerm = searchInput.value.trim();
+            if (searchTerm) {
+                const searchBtn = searchInput.nextElementSibling;
+                const originalContent = searchBtn.innerHTML;
+                searchBtn.innerHTML = '<span class="loading"></span>';
+                setTimeout(() => {
+                    searchBtn.innerHTML = originalContent;
+                    alert(`"${searchTerm}" এর জন্য খোঁজা হচ্ছে...`);
+                }, 1500);
+            }
+        }
+
+        document.querySelectorAll('#searchInput, #mobileSearchInput').forEach(input => {
+            if (input) {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') performSearch();
+                });
+            }
+        });
+
+        function selectCategory(category) {
+            const categoryNames = {
+                'pajama': 'পায়জামা',
+                'panjabi': 'পাঞ্জাবি',
+                'trouser': 'ট্রাউজার'
+            };
+            alert(`আপনি ${categoryNames[category]} বিভাগ নির্বাচন করেছেন`);
+        }
+
+        function addToCart(productId) {
+            cartCount++;
+            cartItems.push(productId);
+            document.getElementById('cartCount').textContent = cartCount;
+            document.getElementById('mobileCartCount').textContent = cartCount;
+            showNotification('পণ্যটি কার্টে যোগ করা হয়েছে! 🛒');
+            const cartBtn = document.querySelector('.cart-btn');
+            cartBtn.style.transform = 'scale(1.1)';
+            setTimeout(() => cartBtn.style.transform = 'scale(1)', 200);
+        }
+
+        function showCart() {
+            if (cartCount === 0) {
+                alert('আপনার কার্ট খালি আছে');
+            } else {
+                alert(`আপনার কার্টে ${cartCount}টি পণ্য আছে\nআইটেমসমূহ: ${cartItems.join(', ')}`);
+            }
+        }
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #28a745;
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 10000;
+                font-weight: 500;
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.style.transform = 'translateX(0)', 100);
+            setTimeout(() => {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => document.body.removeChild(notification), 300);
+            }, 3000);
+        }
+
+        document.querySelectorAll('.nav-item, .mobile-nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                document.querySelectorAll('.nav-item, .mobile-nav-item').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        window.addEventListener('load', () => {
+            const animateElements = document.querySelectorAll('.category-card, .product-card');
+            animateElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 100;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > swipeThreshold) {
+                const sideMenu = document.getElementById('sideMenu');
+                if (diff > 0 && sideMenu.classList.contains('active')) {
+                    toggleMenu();
+                } else if (diff < 0 && !sideMenu.classList.contains('active')) {
+                    toggleMenu();
+                }
+            }
+        }
+
+        function validateForm(form) {
+            const inputs = form.querySelectorAll('input[required]');
+            let isValid = true;
+            inputs.forEach(input => {
+                input.style.borderColor = input.value.trim() ? '#28a745' : '#dc3545';
+                if (!input.value.trim()) isValid = false;
+            });
+            return isValid;
+        }
+
+        const searchSuggestions = [
+            'পায়জামা', 'পাঞ্জাবি', 'ট্রাউজার', 'কটন পায়জামা', 'সিল্ক পাঞ্জাবি',
+            'ফরমাল ট্রাউজার', 'ক্যাজুয়াল পায়জামা', 'পার্টি ওয়্যার', 'অফিস ওয়্যার'
+        ];
+
+        const searchInputs = [document.getElementById('searchInput'), document.getElementById('mobileSearchInput')];
+        
+        searchInputs.forEach(searchInput => {
+            if (searchInput) {
+                const suggestionsContainer = document.createElement('div');
+                suggestionsContainer.className = 'search-suggestions';
+                searchInput.parentNode.style.position = 'relative';
+                searchInput.parentNode.appendChild(suggestionsContainer);
+
+                searchInput.addEventListener('input', function() {
+                    const query = this.value.toLowerCase().trim();
+                    if (query.length > 0) {
+                        const matches = searchSuggestions.filter(suggestion => suggestion.toLowerCase().includes(query));
+                        if (matches.length > 0) {
+                            suggestionsContainer.innerHTML = matches.slice(0, 5).map(match => `
+                                <div class="suggestion-item" onclick="selectSuggestion('${match}', '${searchInput.id}')">
+                                    🔍 ${match}
+                                </div>
+                            `).join('');
+                            suggestionsContainer.style.display = 'block';
+                        } else {
+                            suggestionsContainer.style.display = 'none';
+                        }
+                    } else {
+                        suggestionsContainer.style.display = 'none';
+                    }
+                });
+            }
+        });
+
+        function selectSuggestion(suggestion, inputId) {
+            const searchInput = document.getElementById(inputId);
+            searchInput.value = suggestion;
+            searchInput.parentNode.querySelector('.search-suggestions').style.display = 'none';
+            performSearch();
+        }
+
+        document.addEventListener('click', e => {
+            document.querySelectorAll('.search-suggestions').forEach(container => {
+                if (!container.parentNode.contains(e.target)) {
+                    container.style.display = 'none';
+                }
+            });
+        });
+
+        function lazyLoadImages() {
+            const images = document.querySelectorAll('img[data-src]');
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+            images.forEach(img => imageObserver.observe(img));
+        }
+
+        function toggleMobileSearch() {
+            const mobileSearch = document.querySelector('.mobile-search-container');
+            mobileSearch.style.display = window.innerWidth <= 768 ? 'block' : 'none';
+        }
+
+        // Keyboard Navigation for Slider
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (e.key === 'ArrowRight') {
+                changeSlide(1);
+            }
+        });
+
+        // Touch/Swipe support for slider
+        let sliderTouchStartX = 0;
+        let sliderTouchEndX = 0;
+
+        document.querySelector('.hero-slider').addEventListener('touchstart', e => {
+            sliderTouchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.querySelector('.hero-slider').addEventListener('touchend', e => {
+            sliderTouchEndX = e.changedTouches[0].screenX;
+            handleSliderSwipe();
+        });
+
+        function handleSliderSwipe() {
+            const swipeThreshold = 50;
+            const diff = sliderTouchStartX - sliderTouchEndX;
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    changeSlide(1); // Swipe left, next slide
+                } else {
+                    changeSlide(-1); // Swipe right, previous slide
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('খুঁজে নাও ওয়েবসাইট লোড হয়েছে!');
+            lazyLoadImages();
+            toggleMobileSearch();
+            document.body.style.opacity = '1';
+        });
+
+        window.addEventListener('resize', toggleMobileSearch);
+
+        window.addEventListener('load', () => {
+            const loadTime = performance.now();
+            console.log(`পেজ লোড সময়: ${Math.round(loadTime)}ms`);
+        });
+
+        document.body.style.opacity = '0';
+        document.body.style.transition = 'opacity 0.3s ease';
+    </script>
+</body>
+</html>
