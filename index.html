@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -8,31 +9,102 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Animate.css for animations -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     <style>
-        /* Minimal custom styles for specific overrides */
+        /* Global Styles */
+        body {
+            font-family: 'Noto Serif Bengali', serif;
+            color: #333;
+            background-color: #f5f7fa;
+            line-height: 1.6;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        a {
+            transition: color 0.3s ease;
+        }
+     
+      .btn-primary {
+            background-color: #00ADEF;
+            border-color: #00ADEF;
+            border-radius: 50px;
+            padding: 10px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #0086c3;
+            border-color: #0086c3;
+            transform: translateY(-2px);
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
         .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
+            font-size: 2rem;
+            font-weight: 700;
             color: #00ADEF;
             text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 1px;
         }
         .cart-count {
             position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #00ADEF;
+            top: -10px;
+            right: -10px;
+            background: #ff4d4d;
             color: white;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             font-size: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-weight: 600;
+        }
+        .input-group .form-control {
+            border-radius: 50px 0 0 50px;
+            border: 1px solid #e0e0e0;
+            padding: 12px 20px;
+            font-size: 1rem;
+        }
+        .input-group .btn {
+            border-radius: 0 50px 50px 0;
+            padding: 12px 20px;
+        }
+        .input-group .btn {
+            border-top-right-radius: 50px !important;
+            border-bottom-right-radius: 50px !important;
+        }
+  
+
+        /* Navigation Styles */
+        .navbar-nav .nav-link {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #00ADEF !important;
+            padding: 10px 15px;
+            transition: color 0.3s ease;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #0086c3 !important;
         }
         .dropdown-menu, .dropdown-submenu {
-            border-radius: 8px;
+            border: none;
+            border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            background: #ffffff;
+            padding: 10px 0;
         }
         .dropdown-submenu {
             position: absolute;
@@ -44,36 +116,100 @@
         .dropdown-item:hover > .dropdown-submenu {
             display: block;
         }
+        .dropdown-item {
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #333;
+        }
+        .dropdown-item:hover {
+            background: #f8f9fa;
+            color: #00ADEF;
+        }
+
+        /* Enhanced Carousel Styles */
+        .hero-carousel {
+            margin-bottom: 3rem;
+        }
         .carousel-item {
-            height: 400px;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .carousel-item:hover img {
+            transform: scale(1.05);
+        }
+        .carousel-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0,173,239,0.8), rgba(0,134,195,0.6));
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .carousel-item:hover .carousel-overlay {
+            opacity: 1;
+        }
+        .carousel-content {
             text-align: center;
+            color: white;
+            z-index: 2;
+            padding: 20px;
         }
-        .carousel-item:nth-child(1) {
-            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://img.lazcdn.com/us/domino/92cbdcb4-0eba-4f82-868d-a9ca3fb66eb3_BD-1976-688.jpg_2200x2200q80.jpg_.webp');
-            background-color: #667eea;
+        .carousel-content h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
-        .carousel-item:nth-child(2) {
-            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://img.lazcdn.com/us/domino/fed2065b-5456-4edf-8377-952a3fb191e4_BD-1976-688.jpg_2200x2200q80.jpg_.webp');
-            background-color: #f093fb;
+        .carousel-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
-        .carousel-item:nth-child(3) {
-            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://img.lazcdn.com/us/domino/8c2a83b4-bc22-4936-a729-91ea3fa493af_BD-1976-688.jpg_2200x2200q80.jpg_.webp');
-            background-color: #4facfe;
+        .carousel-control-prev, .carousel-control-next {
+            width: 5%;
+            background: rgba(0,173,239,0.2);
+            transition: background 0.3s ease;
         }
+        .carousel-control-prev:hover, .carousel-control-next:hover {
+            background: rgba(0,173,239,0.4);
+        }
+        .carousel-control-prev-icon, .carousel-control-next-icon {
+            background-size: 24px 24px;
+        }
+        .carousel-indicators button {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.7);
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+        .carousel-indicators .active {
+            background-color: #00ADEF;
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        /* Side Menu Styles */
         .side-menu {
             position: fixed;
             top: 0;
             left: -400px;
             width: 400px;
             height: 100vh;
-            background: white;
+            background: linear-gradient(180deg, #ffffff, #f8f9fa);
             z-index: 2000;
             transition: left 0.3s ease;
             box-shadow: 2px 0 20px rgba(0,0,0,0.1);
@@ -90,13 +226,31 @@
         .menu-item.expanded .submenu, .submenu-item.expanded .sub-submenu {
             max-height: 500px;
         }
+        .list-group-item {
+            border: none;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            color: #333;
+        }
+        .list-group-item:hover {
+            background: #f8f9fa;
+            color: #00ADEF;
+        }
+        .submenu-arrow {
+            transition: transform 0.3s ease;
+        }
+        .menu-item.expanded .submenu-arrow, .submenu-item.expanded .submenu-arrow {
+            transform: rotate(90deg);
+        }
+
+        /* Overlay Styles */
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             z-index: 1500;
             opacity: 0;
             visibility: hidden;
@@ -106,59 +260,173 @@
             opacity: 1;
             visibility: visible;
         }
+
+        /* Search Suggestions */
         .search-suggestions {
             position: absolute;
             top: 100%;
             left: 0;
             right: 0;
-            background: white;
+            background: #ffffff;
             border: 1px solid #e0e0e0;
             border-top: none;
             border-radius: 0 0 15px 15px;
-            max-height: 200px;
+            max-height: 250px;
             overflow-y: auto;
             z-index: 1000;
             display: none;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
         .suggestion-item {
             padding: 12px 20px;
             cursor: pointer;
             border-bottom: 1px solid #f0f0f0;
             transition: background 0.2s ease;
+            font-size: 1rem;
         }
         .suggestion-item:hover {
-            background: #f8f9fa;
+            background: #00ADEF;
+            color: #fff;
         }
+
+        /* Categories Section */
+        .categories .card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .categories .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        .categories .card-body {
+            padding: 30px;
+        }
+        .categories .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        .categories .card-text {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        /* Featured Products */
+        .featured-products .card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .featured-products .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        .featured-products .card-img-top {
+            background: #f8f9fa;
+            transition: transform 0.5s ease;
+        }
+        .featured-products .card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+        .featured-products .card-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        .featured-products .card-text {
+            font-size: 1.2rem;
+            color: #00ADEF;
+        }
+
+        /* Footer Styles */
+        footer {
+            background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+            color: #fff;
+        }
+        footer h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        footer a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        footer a:hover {
+            color: #00ADEF;
+        }
+        footer .border-top {
+            border-color: #444 !important;
+        }
+
+        /* Bottom Navigation */
+        .fixed-bottom {
+            background: #ffffff;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            padding: 10px 0;
+        }
+        .fixed-bottom a {
+            color: #666;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        .fixed-bottom a:hover, .fixed-bottom a.active {
+            color: #00ADEF;
+        }
+
+        /* Responsive Adjustments */
         @media (max-width: 768px) {
+            .carousel-item {
+                height: 350px;
+            }
+            .carousel-content h2 {
+                font-size: 2rem;
+            }
+            .carousel-content p {
+                font-size: 1.1rem;
+            }
             .side-menu {
                 width: 320px;
                 left: -320px;
             }
         }
         @media (max-width: 480px) {
+            .carousel-item {
+                height: 280px;
+            }
+            .carousel-content h2 {
+                font-size: 1.8rem;
+            }
+            .carousel-content p {
+                font-size: 1rem;
+            }
             .side-menu {
                 width: 280px;
                 left: -280px;
+            }
+            .logo {
+                font-size: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
     <!-- Header -->
-    <header class="sticky-top bg-white shadow">
+    <header class="sticky-top shadow">
         <div class="container py-3">
             <div class="d-flex align-items-center justify-content-between">
-                <button class="btn d-md-none" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+                <button class="btn d-md-none" onclick="toggleMenu()"><i class="fas fa-bars fa-lg"></i></button>
                 <a href="#" class="logo">খুঁজে নাও</a>
                 <div class="d-none d-md-flex flex-grow-1 mx-3">
                     <div class="input-group">
-                        <input type="text" class="form-control rounded-pill" placeholder="পণ্য খুঁজুন..." id="searchInput">
-                        <button class="btn btn-primary rounded-pill" onclick="performSearch()"><i class="fas fa-search"></i></button>
+                        <input type="text" class="form-control" placeholder="পণ্য খুঁজুন..." id="searchInput">
+                        <button class="btn btn-primary" onclick="performSearch()"><i class="fas fa-search"></i></button>
                     </div>
                 </div>
                 <div class="d-flex align-items-center">
                     <button class="btn position-relative" onclick="showCart()">
-                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-shopping-cart fa-lg"></i>
                         <span class="cart-count" id="cartCount">0</span>
                     </button>
                 </div>
@@ -169,8 +437,8 @@
     <!-- Mobile Search -->
     <div class="container d-md-none py-3 bg-white">
         <div class="input-group">
-            <input type="text" class="form-control rounded-pill" placeholder="পণ্য খুঁজুন..." id="mobileSearchInput">
-            <button class="btn btn-primary rounded-pill" onclick="performSearch()"><i class="fas fa-search"></i></button>
+            <input type="text" class="form-control" placeholder="পণ্য খুঁজুন..." id="mobileSearchInput">
+            <button class="btn btn-primary" onclick="performSearch()"><i class="fas fa-search"></i></button>
         </div>
     </div>
 
@@ -180,7 +448,7 @@
             <div class="collapse navbar-collapse justify-content-center">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-primary" href="#" role="button" data-bs-toggle="dropdown">পুরুষের পোশাক</a>
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">পুরুষের পোশাক</a>
                         <ul class="dropdown-menu">
                             <li class="dropdown-item dropdown">
                                 <a class="dropdown-item" href="#">পায়জামা</a>
@@ -212,7 +480,7 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-primary" href="#" role="button" data-bs-toggle="dropdown">মহিলাদের পোশাক</a>
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">মহিলাদের পোশাক</a>
                         <ul class="dropdown-menu">
                             <li class="dropdown-item dropdown">
                                 <a class="dropdown-item" href="#">শাড়ি</a>
@@ -244,7 +512,7 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-primary" href="#" role="button" data-bs-toggle="dropdown">শিশুদের পোশাক</a>
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">শিশুদের পোশাক</a>
                         <ul class="dropdown-menu">
                             <li class="dropdown-item dropdown">
                                 <a class="dropdown-item" href="#">ছেলেদের পোশাক</a>
@@ -267,7 +535,7 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-primary" href="#" role="button" data-bs-toggle="dropdown">অ্যাক্সেসরিজ</a>
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">অ্যাক্সেসরিজ</a>
                         <ul class="dropdown-menu">
                             <li class="dropdown-item dropdown">
                                 <a class="dropdown-item" href="#">ব্যাগ</a>
@@ -290,63 +558,74 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-primary" href="#offers">অফার</a>
+                        <a class="nav-link" href="#offers">অফার</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Slider -->
-    <section id="carouselExampleIndicators" class="carousel slide mb-5">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    <!-- Enhanced Hero Carousel -->
+    <section class="hero-carousel">
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://img.lazcdn.com/us/domino/faad2721-58b6-49be-8fec-ac1a9b3c1daf_BD-1976-688.jpg_2200x2200q80.jpg_.webp" alt="বিশেষ অফার">
+                    <div class="carousel-overlay">
+                        <div class="carousel-content">
+                            <h2 class="animate__animated animate__fadeInUp">বিশেষ অফার</h2>
+                            <p class="animate__animated animate__fadeInUp animate__delay-1s">সকল পণ্যে ৫০% পর্যন্ত ছাড়</p>
+                            <button class="btn btn-primary btn-lg animate__animated animate__fadeInUp animate__delay-2s" onclick="selectCategory('offer')">
+                                <i class="fas fa-shopping-bag me-2"></i>এখনই কিনুন
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://img.lazcdn.com/us/domino/fed2065b-5456-4edf-8377-952a3fb191e4_BD-1976-688.jpg_2200x2200q80.jpg_.webp" alt="নতুন কালেকশন">
+                    <div class="carousel-overlay">
+                        <div class="carousel-content">
+                            <h2 class="animate__animated animate__fadeInUp">নতুন কালেকশন</h2>
+                            <p class="animate__animated animate__fadeInUp animate__delay-1s">আধুনিক ডিজাইনের পোশাক</p>
+                            <button class="btn btn-primary btn-lg animate__animated animate__fadeInUp animate__delay-2s" onclick="selectCategory('new')">
+                                <i class="fas fa-star me-2"></i>দেখুন
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://img.lazcdn.com/us/domino/8c2a83b4-bc22-4936-a729-91ea3fa493af_BD-1976-688.jpg_2200x2200q80.jpg_.webp" alt="প্রিমিয়াম পণ্য">
+                    <div class="carousel-overlay">
+                        <div class="carousel-content">
+                            <h2 class="animate__animated animate__fadeInUp">প্রিমিয়াম পণ্য</h2>
+                            <p class="animate__animated animate__fadeInUp animate__delay-1s">উন্নত মানের পোশাক</p>
+                            <button class="btn btn-primary btn-lg animate__animated animate__fadeInUp animate__delay-2s" onclick="selectCategory('premium')">
+                                <i class="fas fa-crown me-2"></i>কালেকশন দেখুন
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div class="container">
-                    <div class="text-center">
-                        <h1 class="display-4 fw-bold text-shadow">সেরা পোশাক সংগ্রহ</h1>
-                        <p class="lead">আপনার স্টাইলের জন্য সেরা পছন্দ</p>
-                        <a href="#" class="btn btn-primary btn-lg rounded-pill">এখনই কিনুন</a>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <div class="container">
-                    <div class="text-center">
-                        <h1 class="display-4 fw-bold text-shadow">আধুনিক ফ্যাশন</h1>
-                        <p class="lead">নতুন ট্রেন্ডের সাথে এগিয়ে থাকুন</p>
-                        <a href="#" class="btn btn-primary btn-lg rounded-pill">আরও দেখুন</a>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <div class="container">
-                    <div class="text-center">
-                        <h1 class="display-4 fw-bold text-shadow">অফার চলছে!</h1>
-                        <p class="lead">অবিশ্বাস্য ডিসকাউন্ট মিস করবেন না</p>
-                        <a href="#" class="btn btn-primary btn-lg rounded-pill">অফার দেখুন</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
     </section>
 
     <!-- Categories Section -->
     <section class="categories mb-5" id="categories">
         <div class="container">
-            <h2 class="text-center display-6 fw-bold mb-4">প্রধান বিভাগসমূহ</h2>
+            <h2 class="text-center display-6 fw-bold mb-5">প্রধান বিভাগসমূহ</h2>
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 <a href="#" class="col text-decoration-none" onclick="selectCategory('pajama')">
                     <div class="card h-100 text-center shadow">
@@ -388,7 +667,7 @@
     <!-- Featured Products -->
     <section class="featured-products mb-5" id="products">
         <div class="container">
-            <h2 class="text-center display-6 fw-bold mb-4">বিশেষ পণ্যসমূহ</h2>
+            <h2 class="text-center display-6 fw-bold mb-5">বিশেষ পণ্যসমূহ</h2>
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 <div class="col">
                     <div class="card h-100 shadow">
@@ -660,7 +939,18 @@
     <script>
         let cartCount = 0;
         let cartItems = [];
-        let currentSlideIndex = 0;
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('খুঁজে নাও ওয়েবসাইট লোড হয়েছে!');
+            
+            // Initialize carousel with auto-play
+            const carousel = new bootstrap.Carousel(document.getElementById('heroCarousel'), {
+                interval: 5000,
+                wrap: true,
+                touch: true
+            });
+        });
 
         // Menu Functions
         function toggleMenu() {
@@ -673,11 +963,14 @@
         function toggleSubmenu(element) {
             const menuItem = element.parentElement;
             const isExpanded = menuItem.classList.contains('expanded');
+            
+            // Close other expanded items
             document.querySelectorAll('.menu-item.expanded').forEach(item => {
                 if (item !== menuItem) {
                     item.classList.remove('expanded');
                 }
             });
+            
             menuItem.classList.toggle('expanded');
             event.preventDefault();
             return false;
@@ -686,56 +979,88 @@
         function toggleSubSubmenu(element) {
             const submenuItem = element.parentElement;
             const parentSubmenu = submenuItem.closest('.submenu');
+            
+            // Close other expanded sub-items in the same submenu
             parentSubmenu.querySelectorAll('.submenu-item.expanded').forEach(item => {
                 if (item !== submenuItem) {
                     item.classList.remove('expanded');
                 }
             });
+            
             submenuItem.classList.toggle('expanded');
             event.preventDefault();
             return false;
         }
 
+        // Search Functions
         function performSearch() {
             const searchInputs = [document.getElementById('searchInput'), document.getElementById('mobileSearchInput')];
             const searchInput = searchInputs.find(input => input && input.value.trim());
+            
             if (!searchInput) return;
 
             const searchTerm = searchInput.value.trim();
             if (searchTerm) {
                 const searchBtn = searchInput.nextElementSibling;
                 const originalContent = searchBtn.innerHTML;
+                
+                // Show loading state
                 searchBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+                searchBtn.disabled = true;
+                
+                // Simulate search
                 setTimeout(() => {
                     searchBtn.innerHTML = originalContent;
-                    alert(`"${searchTerm}" এর জন্য খোঁজা হচ্ছে...`);
+                    searchBtn.disabled = false;
+                    showNotification(`"${searchTerm}" এর জন্য অনুসন্ধান সম্পন্ন! 🔍`);
                 }, 1500);
             }
         }
 
+        // Add search on Enter key press
         document.querySelectorAll('#searchInput, #mobileSearchInput').forEach(input => {
             if (input) {
                 input.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') performSearch();
+                    if (e.key === 'Enter') {
+                        performSearch();
+                    }
                 });
             }
         });
 
+        // Category Functions
         function selectCategory(category) {
             const categoryNames = {
                 'pajama': 'পায়জামা',
                 'panjabi': 'পাঞ্জাবি',
-                'trouser': 'ট্রাউজার'
+                'trouser': 'ট্রাউজার',
+                'offer': 'বিশেষ অফার',
+                'new': 'নতুন কালেকশন',
+                'premium': 'প্রিমিয়াম পণ্য'
             };
-            alert(`আপনি ${categoryNames[category]} বিভাগ নির্বাচন করেছেন`);
+            
+            showNotification(`আপনি ${categoryNames[category]} বিভাগ নির্বাচন করেছেন! 📂`);
+            
+            // Scroll to products section
+            document.getElementById('products').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
         }
 
+        // Cart Functions
         function addToCart(productId) {
             cartCount++;
             cartItems.push(productId);
+            
+            // Update cart count displays
             document.getElementById('cartCount').textContent = cartCount;
             document.getElementById('mobileCartCount').textContent = cartCount;
+            
+            // Show success notification
             showNotification('পণ্যটি কার্টে যোগ করা হয়েছে! 🛒');
+            
+            // Animate cart button
             const cartBtn = document.querySelector('.position-relative');
             cartBtn.style.transform = 'scale(1.1)';
             setTimeout(() => cartBtn.style.transform = 'scale(1)', 200);
@@ -743,78 +1068,49 @@
 
         function showCart() {
             if (cartCount === 0) {
-                alert('আপনার কার্ট খালি আছে');
+                showNotification('আপনার কার্ট খালি আছে 🛒', 'warning');
             } else {
-                alert(`আপনার কার্টে ${cartCount}টি পণ্য আছে\nআইটেমসমূহ: ${cartItems.join(', ')}`);
+                const productNames = {
+                    'pajama1': 'প্রিমিয়াম কটন পায়জামা',
+                    'panjabi1': 'ডিজাইনার পাঞ্জাবি', 
+                    'trouser1': 'ফরমাল ট্রাউজার'
+                };
+                
+                const itemNames = cartItems.map(id => productNames[id] || id).join(', ');
+                alert(`আপনার কার্টে ${cartCount}টি পণ্য আছে:\n\n${itemNames}`);
             }
         }
 
-        function showNotification(message) {
+        // Notification System
+        function showNotification(message, type = 'success') {
             const notification = document.createElement('div');
-            notification.className = 'position-fixed top-0 end-0 m-3 p-3 bg-success text-white rounded shadow';
+            const bgColor = type === 'success' ? 'bg-success' : type === 'warning' ? 'bg-warning' : 'bg-info';
+            
+            notification.className = `position-fixed top-0 end-0 m-3 p-3 ${bgColor} text-white rounded shadow animate__animated animate__slideInRight`;
             notification.style.zIndex = '10000';
-            notification.style.transform = 'translateX(400px)';
-            notification.style.transition = 'transform 0.3s ease';
-            notification.textContent = message;
+            notification.style.maxWidth = '350px';
+            notification.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">${message}</div>
+                    <button class="btn btn-sm text-white ms-2" onclick="this.parentElement.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
             document.body.appendChild(notification);
-            setTimeout(() => notification.style.transform = 'translateX(0)', 100);
+            
+            // Auto remove after 4 seconds
             setTimeout(() => {
-                notification.style.transform = 'translateX(400px)';
-                setTimeout(() => document.body.removeChild(notification), 300);
-            }, 3000);
-        }
-
-        document.querySelectorAll('.nav-item, .mobile-nav-item').forEach(item => {
-            item.addEventListener('click', function() {
-                document.querySelectorAll('.nav-item, .mobile-nav-item').forEach(nav => nav.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
-
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                if (notification.parentElement) {
+                    notification.classList.add('animate__slideOutRight');
+                    setTimeout(() => {
+                        if (notification.parentElement) {
+                            notification.remove();
+                        }
+                    }, 500);
                 }
-            });
-        });
-
-        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate__animated', 'animate__fadeInUp');
-                }
-            });
-        }, observerOptions);
-
-        window.addEventListener('load', () => {
-            const animateElements = document.querySelectorAll('.card');
-            animateElements.forEach(el => observer.observe(el));
-        });
-
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        document.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
-        document.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
-
-        function handleSwipe() {
-            const swipeThreshold = 100;
-            const diff = touchStartX - touchEndX;
-            if (Math.abs(diff) > swipeThreshold) {
-                const sideMenu = document.getElementById('sideMenu');
-                if (diff > 0 && sideMenu.classList.contains('active')) {
-                    toggleMenu();
-                } else if (diff < 0 && !sideMenu.classList.contains('active')) {
-                    toggleMenu();
-                }
-            }
+            }, 4000);
         }
 
         const searchSuggestions = [
@@ -866,12 +1162,6 @@
                 }
             });
         });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('খুঁজে নাও ওয়েবসাইট লোড হয়েছে!');
-        });
     </script>
-    <!-- Animate.css for animations -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
 </body>
 </html>
