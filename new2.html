@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>জাতীয় সংবাদ - বাংলা নিউজ</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Noto Sans Bengali', sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, #dc3545, #fd7e14);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 0;
+            margin-bottom: 40px;
+        }
+        
+        .breadcrumb {
+            background: transparent;
+            padding: 0;
+        }
+        
+        .breadcrumb-item a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+        }
+        
+        .breadcrumb-item.active {
+            color: white;
+        }
+        
+        .news-card {
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            background: white;
+            margin-bottom: 30px;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .news-card img {
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .news-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .category-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(220, 53, 69, 0.9);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .news-meta {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .news-meta i {
+            margin-right: 5px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #dc3545, #fd7e14);
+            border: none;
+            border-radius: 25px;
+            padding: 10px 25px;
+            font-weight: 500;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #b02a37, #e8610e);
+            transform: translateY(-2px);
+        }
+        
+        .featured-news {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6));
+            color: white;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            height: 400px;
+            margin-bottom: 40px;
+        }
+        
+        .featured-news img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        
+        .featured-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 40px;
+        }
+        
+        .pagination {
+            justify-content: center;
+            margin-top: 40px;
+        }
+        
+        .page-link {
+            border-radius: 50px;
+            margin: 0 5px;
+            border: none;
+            background: #f8f9fa;
+            color: #495057;
+        }
+        
+        .page-link:hover {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .page-item.active .page-link {
+            background: linear-gradient(45deg, #dc3545, #fd7e14);
+            border: none;
+        }
+        
+        .sidebar-widget {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .widget-title {
+            color: #dc3545;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f8f9fa;
+        }
+        
+        .trending-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #f8f9fa;
+        }
+        
+        .trending-item:last-child {
+            border-bottom: none;
+        }
+        
+        .trending-number {
+            background: linear-gradient(45deg, #dc3545, #fd7e14);
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-newspaper me-2"></i>বাংলা নিউজ
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">হোম</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="national.html">জাতীয়</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="international.html">আন্তর্জাতিক</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="politics.html">রাজনীতি</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sports.html">খেলাধুলা</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="entertainment.html">বিনোদন</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="technology.html">প্রযুক্তি</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="খোঁজ করুন...">
+                    <button class="btn btn-outline-danger" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">হোম</a></li>
+                    <li class="breadcrumb-item active">জাতীয়</li>
+                </ol>
+            </nav>
+            <h1 class="display-4 fw-bold">জাতীয় সংবাদ</h1>
+            <p class="lead">দেশের সর্বশেষ জাতীয় সংবাদ ও ঘটনাবলী</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <!-- Left Column -->
+            <div class="col-lg-8">
+                <!-- Featured News -->
+                <div class="featured-news">
+                    <img src="https://images.unsplash.com/photo-1586339949916-3e9457bef6d3?w=800&h=400&fit=crop" alt="প্রধান সংবাদ">
+                    <div class="featured-content">
+                        <div class="category-badge">জাতীয়</div>
+                        <h2 class="h3 mb-3">প্রধানমন্ত্রীর নতুন উন্নয়ন পরিকল্পনা ঘোষণা</h2>
+                        <p class="mb-3">দেশের সার্বিক উন্নয়নের জন্য প্রধানমন্ত্রী নতুন একটি মেগা প্রকল্পের ঘোষণা দিয়েছেন। এই প্রকল্প দেশের অর্থনৈতিক কাঠামো পরিবর্তনে গুরুত্বপূর্ণ ভূমিকা পালন করবে।</p>
+                        <div class="news-meta">
+                            <i class="bi bi-clock"></i>১ ঘন্টা আগে
+                            <i class="bi bi-eye ms-3"></i>২,৫৪৮ জন দেখেছেন
+                            <i class="bi bi-chat-dots ms-3"></i>৮৬ মন্তব্য
+                        </div>
+                    </div>
+                </div>
+
+                <!-- News Cards -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card news-card h-100">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=200&fit=crop" class="card-img-top" alt="সংবাদ">
+                                <div class="category-badge">শিক্ষা</div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">শিক্ষা মন্ত্রণালয়ের নতুন নীতিমালা</h5>
+                                <p class="card-text">দেশের শিক্ষা ব্যবস্থায় আমূল পরিবর্তন আনতে শিক্ষা মন্ত্রণালয় নতুন নীতিমালা প্রণয়ন করেছে। এই নীতিমালা অনুযায়ী প্রাথমিক থেকে উচ্চশিক্ষা পর্যন্ত সব স্তরে পরিবর্তন আসবে।</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="news-meta">
+                                        <i class="bi bi-clock me-1"></i>২ ঘন্টা আগে
+                                    </small>
+                                    <a href="#" class="btn btn-sm btn-primary">বিস্তারিত</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card news-card h-100">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=200&fit=crop" class="card-img-top" alt="সংবাদ">
+                                <div class="category-badge">পরিবেশ</div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">বায়ু দূষণ কমাতে নতুন পদক্ষেপ</h5>
+                                <p class="card-text">রাজধানীর বায়ু দূষণ কমানোর জন্য সরকার নতুন কর্মপরিকল্পনা গ্রহণ করেছে। এর মধ্যে রয়েছে শিল্প কারখানার নিয়ন্ত্রণ এবং যানবাহনের জ্বালানি মান উন্নয়ন।</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="news-meta">
+                                        <i class="bi bi-clock me-1"></i>৩ ঘন্টা আগে
+                                    </small>
+                                    <a href="#" class="btn btn-sm btn-primary">বিস্তারিত</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card news-card h-100">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&h=200&fit=crop" class="card-img-top" alt="সংবাদ">
+                                <div class="category-badge">স্বাস্থ্য</div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">গ্রামাঞ্চলে স্বাস্থ্য সেবা সম্প্রসারণ</h5>
+                                <p class="card-text">গ্রামীণ এলাকায় মানসম্পন্ন স্বাস্থ্য সেবা পৌঁছে দিতে স্বাস্থ্য মন্ত্রণালয় নতুন প্রকল্প হাতে নিয়েছে। এর আওতায় প্রতিটি উপজেলায় আধুনিক হাসপাতাল স্থাপন করা হবে।</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="news-meta">
+                                        <i class="bi bi-clock me-1"></i>৪ ঘন্টা আগে
+                                    </small>
+                                    <a href="#" class="btn btn-sm btn-primary">বিস্তারিত</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card news-card h-100">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=200&fit=crop" class="card-img-top" alt="সংবাদ">
+                                <div class="category-badge">কৃষি</div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">কৃষকদের জন্য ভর্তুকি বৃদ্ধি</h5>
+                                <p class="card-text">আসন্ন বোরো মৌসুমে কৃষকদের উৎপাদন খরচ কমাতে সরকার সার ও বীজের ভর্তুকি বাড়িয়েছে। এতে কৃষকরা কম খরচে বেশি ফসল উৎপাদন করতে পারবেন।</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="news-meta">
+                                        <i class="bi bi-clock me-1"></i>৫ ঘন্টা আগে
+                                    </small>
+                                    <a href="#" class="btn btn-sm btn-primary">বিস্তারিত</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card news-card h-100">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=200&fit=crop" class="card-img-top" alt="সংবাদ">
+                                <div class="category-badge">পরিবহন</div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">মেট্রো রেলের নতুন রুট অনুমোদন</h5>
+                                <p class="card-text">ঢাকার যানজট কমাতে মেট্রো রেলের আরও তিনটি নতুন রুট অনুমোদন দিয়েছে সরকার। এই রুটগুলো চালু হলে রাজধানীর পরিবহন ব্যবস্থায় বিপ্লব ঘটবে।</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="news-meta">
+                                        <i class="bi bi-clock me-1"></i>৬ ঘন্টা আগে
+                                    </small>
+                                    <a href="#" class="btn btn-sm btn-primary">বিস্তারিত</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card news-card h-100">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=200&fit=crop" class="card-img-top" alt="সংবাদ">
+                                <div class="category-badge">অর্থনীতি</div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">রপ্তানি আয়ে নতুন রেকর্ড</h5>
+                                <p class="card-text">চলতি অর্থবছরে দেশের রপ্তানি আয় গত বছরের তুলনায় ১৫ শতাংশ বৃদ্ধি পেয়েছে। তৈরি পোশাক ও চামড়াজাত পণ্যের রপ্তানি বৃদ্ধিতে এই সাফল্য এসেছে।</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="news-meta">
+                                        <i class="bi bi-clock me-1"></i>৮ ঘন্টা আগে
+                                    </small>
+                                    <a href="#" class="btn btn-sm btn-primary">বিস্তারিত</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">পূর্ববর্তী</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">১</a></li>
+                        <li class="page-item"><a class="page-link" href="#">২</a></li>
+                        <li class="page-item"><a class="page-link" href="#">৩</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">পরবর্তী</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="col-lg-4">
+                <!-- Trending News -->
+                <div class="sidebar-widget">
+                    <h5 class="widget-title">
+                        <i class="fas fa-fire me-2"></i>ট্রেন্ডিং নিউজ
+                    </h5>
+                    <div class="trending-item d-flex">
+                        <div class="trending-number">১</div>
+                        <div>
+                            <h6><a href="#" class="text-decoration-none text-dark">প্রধানমন্ত্রীর নতুন ঘোষণা</a></h6>
+                            <small class="text-muted">২,৫৪৮ জন পড়েছেন</small>
+                        </div>
+                    </div>
+                    <div class="trending-item d-flex">
+                        <div class="trending-number">২</div>
+                        <div>
+                            <h6><a href="#" class="text-decoration-none text-dark">শিক্ষা ব্যবস্থায় নতুন পরিবর্তন</a></h6>
+                            <small class="text-muted">১,৮৯০ জন পড়েছেন</small>
+                        </div>
+                    </div>
+                    <div class="trending-item d-flex">
+                        <div class="trending-number">৩</div>
+                        <div>
+                            <h6><a href="#" class="text-decoration-none text-dark">মেট্রো রেলের নতুন রুট</a></h6>
+                            <small class="text-muted">১,৬৭৪ জন পড়েছেন</small>
+                        </div>
+                    </div>
+                    <div class="trending-item d-flex">
+                        <div class="trending-number">৪</div>
+                        <div>
+                            <h6><a href="#" class="text-decoration-none text-dark">কৃষকদের জন্য নতুন সুবিধা</a></h6>
+                            <small class="text-muted">১,৪৫৬ জন পড়েছেন</small>
+                        </div>
+                    </div>
+                    <div class="trending-item d-flex">
+                        <div class="trending-number">৫</div>
+                        <div>
+                            <h6><a href="#" class="text-decoration-none text-dark">বায়ু দূষণ নিয়ন্ত্রণ পরিকল্পনা</a></h6>
+                            <small class="text-muted">১,২৩৪ জন পড়েছেন</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Related Categories -->
+                <div class="sidebar-widget">
+                    <h5 class="widget-title">
+                        <i class="fas fa-tags me-2"></i>সম্পর্কিত বিষয়
+                    </h5>
+                    <div class="d-flex flex-wrap gap-2">
+                        <span class="badge bg-light text-dark p-2">সরকার</span>
+                        <span class="badge bg-light text-dark p-2">নীতি</span>
+                        <span class="badge bg-light text-dark p-2">উন্নয়ন</span>
+                        <span class="badge bg-light text-dark p-2">শিক্ষা</span>
+                        <span class="badge bg-light text-dark p-2">স্বাস্থ্য</span>
+                        <span class="badge bg-light text-dark p-2">কৃষি</span>
+                        <span class="badge bg-light text-dark p-2">পরিবেশ</span>
+                        <span class="badge bg-light text-dark p-2">পরিবহন</span>
+                    </div>
+                </div>
+
+                <!-- Advertisement -->
+                <div class="sidebar-widget text-center">
+                    <h5 class="widget-title">বিজ্ঞাপন</h5>
+                    <div class="bg-light p-4 rounded">
+                        <p class="text-muted">এখানে আপনার বিজ্ঞাপন দিন</p>
+                        <small>৩০০ x ২৫০ পিক্সেল</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white mt-5 py-4">
+        <div class="container">
+            <div class="text-center">
+                <p class="mb-0">&copy; ২০২৫ বাংলা নিউজ। সকল অধিকার সংরক্ষিত।</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Smooth scroll animation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // News cards animation
+        const newsCards = document.querySelectorAll('.news-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        newsCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

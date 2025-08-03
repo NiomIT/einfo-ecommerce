@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>নিউজ</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Noto Sans Bengali', sans-serif;
+            line-height: 1.6;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, #dc3545, #fd7e14);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .breaking-news {
+            background: linear-gradient(90deg, #dc3545, #fd7e14);
+            color: white;
+            padding: 10px 0;
+            overflow: hidden;
+        }
+        
+        .breaking-news .marquee {
+            animation: scroll-left 30s linear infinite;
+            white-space: nowrap;
+        }
+        
+        @keyframes scroll-left {
+            0% { transform: translate3d(100%, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+        
+        .news-card {
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .news-card img {
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .news-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .category-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(220, 53, 69, 0.9);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .main-news {
+            position: relative;
+            height: 400px;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6));
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .main-news img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        
+        .main-news-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 30px;
+            color: white;
+        }
+        
+        .sidebar-news {
+            border-left: 3px solid #dc3545;
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .weather-widget {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: #dc3545;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #dc3545, #fd7e14);
+            border: none;
+            border-radius: 25px;
+            padding: 10px 25px;
+            font-weight: 500;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #b02a37, #e8610e);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-newspaper me-2"></i>বাংলা নিউজ
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">হোম</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">জাতীয়</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">আন্তর্জাতিক</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">রাজনীতি</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">খেলাধুলা</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">বিনোদন</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">প্রযুক্তি</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="খোঁজ করুন...">
+                    <button class="btn btn-outline-danger" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breaking News -->
+    <div class="breaking-news">
+        <div class="container">
+            <div class="d-flex align-items-center">
+                <span class="badge bg-light text-dark me-3">
+                    <i class="fas fa-bolt"></i> ব্রেকিং নিউজ
+                </span>
+                <div class="marquee">
+                    প্রধানমন্ত্রীর গুরুত্বপূর্ণ ঘোষণা • নতুন মেগা প্রকল্পের উদ্বোধন • শিক্ষা খাতে বিশেষ বরাদ্দ • আগামী সপ্তাহে আবহাওয়ার পূর্ভাবাস
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <div class="row">
+            <!-- Left Column -->
+            <div class="col-lg-8">
+                <!-- Featured News -->
+                <div class="main-news mb-4">
+                    <img src="https://images.unsplash.com/photo-1586339949916-3e9457bef6d3?w=800&h=400&fit=crop" alt="প্রধান সংবাদ">
+                    <div class="category-badge">জাতীয়</div>
+                    <div class="main-news-content">
+                        <h2 class="h3 mb-3">দেশের অর্থনৈতিক উন্নয়নে নতুন মাইলফলক অর্জন</h2>
+                        <p class="mb-3">সরকারের নতুন নীতিমালার ফলে দেশের অর্থনীতিতে ইতিবাচক পরিবর্তন আসছে। বিশেষজ্ঞরা বলছেন, এই উদ্যোগ দেশের উন্নয়নে গুরুত্বপূর্ণ ভূমিকা পালন করবে।</p>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-clock me-2"></i>
+                            <span>২ ঘন্টা আগে</span>
+                            <i class="bi bi-eye ms-3 me-2"></i>
+                            <span>১,২৫৪ জন দেখেছেন</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- News Grid -->
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card news-card h-100">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1495020689067-958852a7765e?w=400&h=200&fit=crop" class="card-img-top" alt="সংবাদ">
+                                <div class="category-badge">প্রযুক্তি</div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">কৃত্রিম বুদ্ধিমত্তার নতুন সম্ভাবনা</h5>
+                                <p class="card-text">প্রযুক্তি জগতে এআই এর ব্যবহার দিন দিন বৃদ্ধি পাচ্ছে। বাংলাদেশেও এই খাতে নতুন সম্ভাবনার দ্বার উন্মোচিত হচ্ছে।</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">
+                                        <i class="bi bi-clock me-1"></i>৩ ঘন্টা আগে
+                                    </small>
+                                    <a href="#" class="btn btn-sm btn-primary">বিস্তারিত</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="card news-card h-100">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=200&fit=crop" class="card-img-top" alt="সংবাদ">
+                                <div class="category-badge">খেলাধুলা</div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">ক্রিকেটে বাংলাদেশের নতুন রেকর্ড</h5>
+                                <p class="card-text">জাতীয় ক্রিকেট দলের দুর্দান্ত পারফরম্যান্সে নতুন ইতিহাস সৃষ্টি হয়েছে। ভক্তরা উৎসাহিত।</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">
+                                        <i class="bi bi-clock me-1"></i>৫ ঘন্টা আগে
+                                    </small>
+                                    <a href="#" class="btn btn-sm btn-primary">বিস্তারিত</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="card news-card h-100">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=200&fit=crop" class="card-img-top" alt="সংবাদ">
+                                <div class="category-badge">শিক্ষা</div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">শিক্ষা ব্যবস্থায় নতুন সংস্কার</h5>
+                                <p class="card-text">দেশের শিক্ষা ব্যবস্থায় আধুনিকায়নের জন্য নতুন নীতিমালা প্রণয়ন করা হয়েছে।</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">
+                                        <i class="bi bi-clock me-1"></i>৬ ঘন্টা আগে
+                                    </small>
+                                    <a href="#" class="btn btn-sm btn-primary">বিস্তারিত</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="card news-card h-100">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=200&fit=crop" class="card-img-top" alt="সংবাদ">
+                                <div class="category-badge">আন্তর্জাতিক</div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">বিশ্ব জলবায়ু সম্মেলনে বাংলাদেশ</h5>
+                                <p class="card-text">জলবায়ু পরিবর্তনের বিষয়ে আন্তর্জাতিক সম্মেলনে বাংলাদেশের গুরুত্বপূর্ণ অংশগ্রহণ।</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">
+                                        <i class="bi bi-clock me-1"></i>৮ ঘন্টা আগে
+                                    </small>
+                                    <a href="#" class="btn btn-sm btn-primary">বিস্তারিত</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="col-lg-4">
+                <!-- Weather Widget -->
+                <div class="weather-widget mb-4">
+                    <h5><i class="bi bi-cloud-sun me-2"></i>আবহাওয়া</h5>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h2>২৮°</h2>
+                            <p class="mb-0">ঢাকা</p>
+                        </div>
+                        <div class="text-end">
+                            <i class="fas fa-sun fa-2x"></i>
+                            <p class="mb-0 mt-2">রোদ</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Popular News -->
+                <div class="card mb-4">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0"><i class="bi bi-fire me-2"></i>জনপ্রিয় সংবাদ</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="sidebar-news">
+                            <h6><a href="#" class="text-decoration-none text-dark">দেশের অর্থনীতিতে নতুন দিগন্তের সূচনা</a></h6>
+                            <small class="text-muted">১ ঘন্টা আগে</small>
+                        </div>
+                        <div class="sidebar-news">
+                            <h6><a href="#" class="text-decoration-none text-dark">প্রযুক্তি খাতে বিনিয়োগ বৃদ্ধির সম্ভাবনা</a></h6>
+                            <small class="text-muted">২ ঘন্টা আগে</small>
+                        </div>
+                        <div class="sidebar-news">
+                            <h6><a href="#" class="text-decoration-none text-dark">শিক্ষা ক্ষেত্রে ডিজিটাল বিপ্লব</a></h6>
+                            <small class="text-muted">৪ ঘন্টা আগে</small>
+                        </div>
+                        <div class="sidebar-news">
+                            <h6><a href="#" class="text-decoration-none text-dark">স্বাস্থ্য সেবায় নতুন মাত্রা</a></h6>
+                            <small class="text-muted">৬ ঘন্টা আগে</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Media -->
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="bi bi-share me-2"></i>আমাদের ফলো করুন</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                        <p class="mt-3 mb-0">সর্বশেষ সংবাদের জন্য আমাদের সাথে যুক্ত থাকুন</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5 class="text-warning mb-3">বাংলা নিউজ</h5>
+                    <p>দেশ ও বিদেশের সর্বশেষ সংবাদ পেতে আমাদের সাথে থাকুন। আমরা সত্য ও নিরপেক্ষ সংবাদ পরিবেশনে প্রতিশ্রুতিবদ্ধ।</p>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h6 class="text-warning mb-3">বিভাগ</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light text-decoration-none">জাতীয়</a></li>
+                        <li><a href="#" class="text-light text-decoration-none">আন্তর্জাতিক</a></li>
+                        <li><a href="#" class="text-light text-decoration-none">রাজনীতি</a></li>
+                        <li><a href="#" class="text-light text-decoration-none">খেলাধুলা</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h6 class="text-warning mb-3">সেবা</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light text-decoration-none">যোগাযোগ</a></li>
+                        <li><a href="#" class="text-light text-decoration-none">বিজ্ঞাপন</a></li>
+                        <li><a href="#" class="text-light text-decoration-none">গোপনীয়তা</a></li>
+                        <li><a href="#" class="text-light text-decoration-none">শর্তাবলী</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h6 class="text-warning mb-3">যোগাযোগ</h6>
+                    <p><i class="bi bi-geo-alt me-2"></i>ঢাকা, বাংলাদেশ</p>
+                    <p><i class="bi bi-telephone me-2"></i>+৮৮০ ১২৩৪-৫৬১৯</p>
+                    <p><i class="bi bi-envelope me-2"></i>info@banglanews.com</p>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; ২০২৫ বাংলা নিউজ। সকল অধিকার সংরক্ষিত।</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Add smooth scrolling animation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add loading animation for news cards
+        const newsCards = document.querySelectorAll('.news-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        newsCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Update time dynamically
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('bn-BD');
+            const dateString = now.toLocaleDateString('bn-BD');
+            
+            // You can add a time display element if needed
+        }
+        
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>
